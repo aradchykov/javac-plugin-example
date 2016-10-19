@@ -1,0 +1,21 @@
+import javax.tools.ToolProvider
+
+group 'javaday-demo'
+version '1.0-SNAPSHOT'
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.13'
+  distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+}
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+
+def toolsJar = files((ToolProvider.systemToolClassLoader as URLClassLoader)
+        .URLs.find({url -> url.file.endsWith("tools.jar")}))
+
+dependencies {
+  compile toolsJar
+}
